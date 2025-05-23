@@ -6,10 +6,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Check, Package, ArrowDown, ArrowUp, Plus, History } from "lucide-react";
+import { Check, Package, ArrowDown, ArrowUp, Plus, History, LayoutGrid } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import MovementHistory from "@/components/MovementHistory";
 import ItemRegistration from "@/components/ItemRegistration";
+import StockReport from "@/components/StockReport";
 
 const Index = () => {
   const [selectedItem, setSelectedItem] = useState("");
@@ -81,7 +82,7 @@ const Index = () => {
         </header>
 
         <Tabs defaultValue="movement" className="w-full">
-          <TabsList className="grid w-full grid-cols-3 mb-6">
+          <TabsList className="grid w-full grid-cols-4 mb-6">
             <TabsTrigger value="movement" className="flex items-center gap-2">
               <Package className="w-4 h-4" />
               Movimentação
@@ -93,6 +94,10 @@ const Index = () => {
             <TabsTrigger value="register" className="flex items-center gap-2">
               <Plus className="w-4 h-4" />
               Cadastrar Item
+            </TabsTrigger>
+            <TabsTrigger value="stock" className="flex items-center gap-2">
+              <LayoutGrid className="w-4 h-4" />
+              Estoque
             </TabsTrigger>
           </TabsList>
 
@@ -237,6 +242,10 @@ const Index = () => {
 
           <TabsContent value="register">
             <ItemRegistration />
+          </TabsContent>
+
+          <TabsContent value="stock">
+            <StockReport />
           </TabsContent>
         </Tabs>
       </div>
