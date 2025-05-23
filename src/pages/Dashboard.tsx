@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
@@ -6,15 +7,15 @@ import ItemRegistration from "@/components/ItemRegistration";
 import StockReport from "@/components/StockReport";
 import Settings from "@/components/Settings";
 import StockMovement from "@/components/StockMovement";
-import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import { LogOut, Package, History, Plus, LayoutGrid, Settings as SettingsIcon, ChevronLeft } from "lucide-react";
+import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarProvider } from "@/components/ui/sidebar";
+import { LogOut, Package, History, Plus, LayoutGrid, Settings as SettingsIcon } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState("movement");
   const navigate = useNavigate();
-  const {
-    toast
-  } = useToast();
+  const { toast } = useToast();
+
   useEffect(() => {
     // Verificar se o usuário está logado
     const isLoggedIn = localStorage.getItem("isLoggedIn");
@@ -22,6 +23,7 @@ const Dashboard = () => {
       navigate("/");
     }
   }, [navigate]);
+
   const handleLogout = () => {
     localStorage.removeItem("isLoggedIn");
     localStorage.removeItem("username");
@@ -31,6 +33,7 @@ const Dashboard = () => {
     });
     navigate("/");
   };
+
   return <SidebarProvider>
       <div className="min-h-screen flex w-full bg-gray-50">
         <Sidebar collapsible="icon">
@@ -38,10 +41,6 @@ const Dashboard = () => {
             <div className="w-10 h-10 bg-blue-600 rounded-md flex items-center justify-center">
               <Package className="w-5 h-5 text-white" />
             </div>
-            <SidebarTrigger className="mt-4 w-full text-right">
-              <ChevronLeft />
-              <span>Recolher</span>
-            </SidebarTrigger>
           </SidebarHeader>
           
           <SidebarContent>
@@ -94,6 +93,28 @@ const Dashboard = () => {
         <div className="flex-1 p-6">
           <div className="flex justify-between items-center mb-6">
             <h1 className="text-2xl font-light text-gray-800">Controle de Estoque</h1>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => {
+                  const sidebar = document.querySelector('[data-sidebar="sidebar"]');
+                  if (sidebar) {
+                    const state = sidebar.closest('[data-state]')?.getAttribute('data-state');
+                    if (state === 'expanded') {
+                      document.querySelector('[data-sidebar="trigger"]')?.click();
+                    } else {
+                      document.querySelector('[data-sidebar="trigger"]')?.click();
+                    }
+                  }
+                }}
+                className="flex items-center gap-1 text-sm text-gray-500 hover:text-gray-800"
+              >
+                {activeTab === "movement" && "Movimentação"}
+                {activeTab === "history" && "Histórico"}
+                {activeTab === "register" && "Cadastrar Item"}
+                {activeTab === "stock" && "Estoque"}
+                {activeTab === "settings" && "Configurações"}
+              </button>
+            </div>
           </div>
           
           <Tabs value={activeTab}>
